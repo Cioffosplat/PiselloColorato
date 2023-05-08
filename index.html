@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pisello Colorato</title>
+    <style>
+        body{
+            zoom: 100%;
+        }
+        #rettangoloPanel {
+            width: 900px;
+            height: 700px;
+            position: relative;
+            margin-left: 20%;
+        }
+
+        #cambiaColoreButton {
+            display: block;
+            width: 150px;
+            height: 40px;
+            margin: 0 auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="icon" href="Pisello.png" type="image/png">
+</head>
+<body>
+<canvas id="rettangoloPanel"></canvas>
+<button id="cambiaColoreButton">Cambia colore</button>
+<link>
+
+<script>
+    function PiselloColorato() {
+        var rettangoloPanel = document.getElementById("rettangoloPanel");
+        var cambiaColoreButton = document.getElementById("cambiaColoreButton");
+        var ctx = rettangoloPanel.getContext("2d");
+
+        // Inizializzazione del pannello
+        rettangoloPanel.width = 600;
+        rettangoloPanel.height = 400;
+        drawRettangoloConCerchi();
+
+        // Aggiunta dell'evento al bottone
+        cambiaColoreButton.addEventListener("click", function() {
+            drawRettangoloConCerchi();
+        });
+
+        function drawRettangoloConCerchi() {
+            var panelWidth = rettangoloPanel.width;
+            var panelHeight = rettangoloPanel.height;
+
+            // Calcolo delle dimensioni del rettangolo
+            var rectangleWidth = panelWidth / 6;
+            var rectangleHeight = (panelHeight * 3) / 5;
+
+            // Calcolo delle coordinate del rettangolo
+            var rectangleX = panelWidth / 2 - rectangleWidth / 2;
+            var rectangleY = panelHeight / 8 + 20;
+
+            // Disegno del rettangolo
+            ctx.fillStyle = getRandomColor();
+            ctx.fillRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+
+            // Calcolo delle dimensioni dei cerchi
+            var circleDiameter = rectangleWidth + 15;
+
+            // Calcolo delle coordinate del primo cerchio
+            var circle1X = rectangleX + rectangleWidth / 4 - circleDiameter / 2 + 40;
+            var circle1Y = rectangleY + rectangleHeight / 2 + 80;
+
+            // Calcolo delle coordinate del secondo cerchio
+            var circle2X = rectangleX + (rectangleWidth * 3) / 4 - circleDiameter / 2 + 70;
+            var circle2Y = rectangleY + rectangleHeight / 2 + 80;
+
+            // Disegno dei cerchi
+            ctx.fillStyle = getRandomColor();
+            ctx.beginPath();
+            ctx.arc(circle1X, circle1Y, circleDiameter / 2, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = getRandomColor();
+            ctx.beginPath();
+            ctx.arc(circle2X, circle2Y, circleDiameter / 2, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // Calcolo delle dimensioni e delle coordinate del semicerchio
+            var semicircleRadius = rectangleWidth / 2;
+            var semicircleX = rectangleX + rectangleWidth / 2 - semicircleRadius;
+            var semicircleY = rectangleY - semicircleRadius;
+
+            // Disegno del semicerchio
+            ctx.fillStyle = getRandomColor();
+            ctx.beginPath();
+            ctx.arc(semicircleX + semicircleRadius, semicircleY + semicircleRadius, semicircleRadius, Math.PI, Math.PI*2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function getRandomColor() {
+            // Genera un colore casuale
+            var red = Math.floor(Math.random() * 256);
+            var green = Math.floor(Math.random() * 256);
+            var blue = Math.floor(Math.random() * 256);
+            return "rgb(" + red + ", " + green + ", " + blue + ")";
+        }
+    }
+
+    // Creazione dell'istanza PiselloColorato al caricamento della pagina
+    window.addEventListener("load", function() {
+        var piselloColorato = new PiselloColorato();
+    });
+</script>
+
